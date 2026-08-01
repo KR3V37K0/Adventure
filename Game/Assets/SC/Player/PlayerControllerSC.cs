@@ -1,10 +1,16 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerControllerSC : MonoBehaviour
 {
+    //
+    // TODO: убрать зависимость с интерактором
+    //
+
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] GameObject obj_Interactor; 
     private CharacterController controller;
     private Vector2 moveInput;
     private Vector3 moveDirection;
@@ -27,8 +33,11 @@ public class PlayerControllerSC : MonoBehaviour
         controller.Move(moveDirection * moveSpeed * Time.deltaTime);
 
         if(moveDirection.x!=0)
+        {
             sprite.flipX = Math.Abs(moveDirection.x) != moveDirection.x;
-
+            obj_Interactor.transform.localRotation = Quaternion.Euler(0, moveDirection.x < 0 ? -180 : 0, 0);
+        }
+            
     }
 
     // Этот метод будет автоматически вызываться Input System

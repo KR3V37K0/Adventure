@@ -12,9 +12,8 @@ public class MainDialogueUI : MonoBehaviour
     [SerializeField] LinePresenter linePresenter;
 
     [SerializeField] Image btn_Continue;
-    [SerializeField] TMP_Text txt_Speaker;
+    //[SerializeField] TMP_Text txt_Speaker;
     public Speaker[] speakers;
-    Speaker previousSpeaker;
 
     void OnEnable()
     {
@@ -45,19 +44,15 @@ public class MainDialogueUI : MonoBehaviour
         btn_Continue.raycastTarget = i;
     }
 
-    void OnLineAction(bool isTalk)
+    void OnLineAction(bool isTalk, string nameCharacter)
     {
+        Debug.Log(linePresenter.characterNameText.text+"  "+isTalk);
+
         if (speakers == null || speakers.Length == 0) return;
 
-        string speakerName = linePresenter.characterNameText != null 
-            ? linePresenter.characterNameText.text 
-            : txt_Speaker.text;
+        if (string.IsNullOrEmpty(nameCharacter)) return;
 
-        if (string.IsNullOrEmpty(speakerName)) return;
-
-        Speaker speaker = speakers.FirstOrDefault(s => s.SpeakerName == speakerName);
-        if(previousSpeaker!=null)speaker?.SetAnimation(false);
+        Speaker speaker = speakers.FirstOrDefault(s => s.SpeakerName == nameCharacter);
         speaker?.SetAnimation(isTalk);
-        previousSpeaker=speaker;
     }
 }
