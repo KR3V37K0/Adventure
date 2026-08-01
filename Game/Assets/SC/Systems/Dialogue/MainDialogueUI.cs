@@ -46,8 +46,6 @@ public class MainDialogueUI : MonoBehaviour
 
     void OnLineAction(bool isTalk, string nameCharacter)
     {
-        Debug.Log(linePresenter.characterNameText.text+"  "+isTalk);
-
         if (speakers == null || speakers.Length == 0) return;
 
         if (string.IsNullOrEmpty(nameCharacter)) return;

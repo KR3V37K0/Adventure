@@ -19,6 +19,8 @@ public class SceneLoaderSC : MonoBehaviour
         Canvas.SetActive(false);
         img_Fade.DOFade(0f,0.5f);
         txt_Load.SetActive(false);
+
+        signalBus.Fire(new SceneLoadedSignal(SceneManager.GetActiveScene().name));
     }
     public async void LoadScene(string _scene)
     {

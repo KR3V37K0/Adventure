@@ -8,6 +8,7 @@ public class TransitionTriggerSC : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        sceneLoader.LoadScene(sceneName);
+        if(coll.gameObject.CompareTag("Player"))
+            sceneLoader.LoadScene(sceneName);
     }
 }
