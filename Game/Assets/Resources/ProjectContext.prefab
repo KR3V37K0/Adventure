@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 516783023585539955}
   - component: {fileID: 4979762541858284761}
   - component: {fileID: 85739319893852630}
+  - component: {fileID: 2733690382314284505}
+  - component: {fileID: 5618022258590956713}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -48,6 +50,8 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 85739319893852630}
+  - {fileID: 2733690382314284505}
+  - {fileID: 5618022258590956713}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
@@ -76,5 +80,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Installer
   SceneLoader: {fileID: 4245914884485044799, guid: 6c26b77a0e6d5444297fc0cded381d48, type: 3}
   PlayerSpawner: {fileID: 6999063446161661052, guid: 6b5497f6e5330814eb3c14fe44651e1b, type: 3}
-  CameraManager: {fileID: 6388497107504517094, guid: b4bf539143cb4db4fa34344b109b7853, type: 3}
+  playerPrefab: {fileID: 4111292892199337287, guid: 7a8ea25f40aac9f4c9b5dce789354676, type: 3}
   DialogueSystem: {fileID: 4998990617368168919, guid: df74c9719fe02ea4da20fe2f51ff59fd, type: 3}
+  PhoneUI: {fileID: 8228404301911036314, guid: 101c511432867394d9cd2d8d7896bd60, type: 3}
+--- !u!114 &2733690382314284505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88053332798066393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3e33abeb6c66d47a472d95570a8a65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuestInstaller
+--- !u!114 &5618022258590956713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88053332798066393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc83ae2f268e4cb44bc4021d2ee3c5f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputInstaller
+  input: {fileID: 5362440173772310698, guid: 2f1de9178fb513c4985b72144748518e, type: 3}

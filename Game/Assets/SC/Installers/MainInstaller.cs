@@ -1,12 +1,15 @@
 using UnityEngine;
+using Yarn.Unity;
 using Zenject;
 
 public class Installer : MonoInstaller
 {
 	[SerializeField] GameObject SceneLoader;
 	[SerializeField] GameObject PlayerSpawner;
+	[SerializeField] GameObject playerPrefab;
 	//[SerializeField] GameObject CameraManager;
 	[SerializeField] GameObject DialogueSystem;
+	[SerializeField] GameObject PhoneUI;
 	public override void InstallBindings()
 	{
 		SignalBusInstaller.Install(Container);
@@ -26,10 +29,20 @@ public class Installer : MonoInstaller
 			.NonLazy();
 		//Container.Bind<CameraSC>().FromComponentInNewPrefab(CameraManager).AsSingle().NonLazy();
 
-		Container.Bind<MainDialogueUI>()
+		Container.Bind<DialogueRunner>()
 			.FromComponentInNewPrefab(DialogueSystem)
 			.AsSingle()
 			.NonLazy();
+
+		Container.Bind<MainDialogueUI>()
+			.FromResolveGetter<DialogueRunner>(runner => runner.GetComponent<MainDialogueUI>())
+			.AsSingle()
+			.NonLazy();
+		Container.Bind<EscMenu>()
+			.FromComponentInNewPrefab(PhoneUI)
+			.AsSingle()
+			.NonLazy();
+	
 
 		Container.DeclareSignal<SceneLoadedSignal>();
 		Container.DeclareSignal<PlayerSpawnedSignal>();

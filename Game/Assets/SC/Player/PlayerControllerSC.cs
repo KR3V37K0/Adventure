@@ -2,13 +2,14 @@ using System;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class PlayerControllerSC : MonoBehaviour
 {
     //
     // TODO: убрать зависимость с интерактором
     //
-
+    [Inject]PlayerInput input;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] GameObject obj_Interactor; 
     private CharacterController controller;
@@ -17,19 +18,18 @@ public class PlayerControllerSC : MonoBehaviour
     SpriteRenderer sprite;
     void Start()
     {
+        input.actions["Move"].performed += ctx => OnMove(ctx);
+        input.actions["Move"].canceled += ctx => OnMove(ctx);
         controller = GetComponent<CharacterController>();
         sprite = GetComponentInChildren<SpriteRenderer>();
     }
      private void Update()
-    {
-        // Преобразуем 2D ввод в 3D направление для CharacterController
+    { 
         moveDirection = new Vector3(moveInput.x, moveInput.y, 0f);
         
-        // Нормализуем вектор, чтобы скорость по диагонали не была выше
         if (moveDirection.magnitude > 1f)
             moveDirection.Normalize();
         
-        // Перемещаем персонажа
         controller.Move(moveDirection * moveSpeed * Time.deltaTime);
 
         if(moveDirection.x!=0)
@@ -40,7 +40,6 @@ public class PlayerControllerSC : MonoBehaviour
             
     }
 
-    // Этот метод будет автоматически вызываться Input System
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();

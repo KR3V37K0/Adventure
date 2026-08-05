@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974f4bbfcbd2b3f4f830a7dfe7e6ad65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawnSC
-  PrefPlayer: {fileID: 4111292892199337287, guid: 7a8ea25f40aac9f4c9b5dce789354676, type: 3}
-  PreviousScene: 
+  playerPrefab: {fileID: 4111292892199337287, guid: 7a8ea25f40aac9f4c9b5dce789354676, type: 3}
+  previousScene: 

@@ -1,11 +1,51 @@
 ﻿title: Witch
 ---
-Witch: Hi!
-Witch: I'm Witch
-Witch: Who are you?
--> I am animator
-    Player: I am the best animator ever!
-    Witch: Wow
-    Player: Yes
--> Nothing. Bye
+<<once>>
+    <<jump Welcome>>
+<<endonce>>
+Witch: вот так вот
+<<if is_quest_active("qTakeBerry")>>
+    <<jump QuestInProgress>>
+<<elseif is_quest_completed("qTakeBerry")>>
+    <<jump QuestCompleted>>
+<<else>>
+    <<jump NoQuest>>
+<<endif>>
+===
+
+title: Welcome
+---
+Witch: Привет!
+Witch: Я лесная ведьма Фиалка. А кто ты?
+-> Великий аниматор
+    Player: Я величайший аниматор всех времен!
+-> Просто мимо проходил
+    Player: Да я просто мимо проход. Я Player
+-> Никто. Пока
+    Player: Ты мня здесь не видела
+    <<stop>>
+Witch: Здорово
+
+<<jump NoQuest>>>>
+===
+
+title: NoQuest
+---
+Witch: Знаешь, мне бы сейчас очень пригодились синие ягоды для одного моего дела...
+Witch: Можешь мне сейчас помочь их собрать?
+-> Да
+    Player: Да. Конечно я их соберу для тебя
+    <<start_quest qTakeBerry>>
+===
+
+title: QuestInProgress
+---
+Witch: Мне бы очень пригодились синие ягоды
+Witch: Принеси их, пожалуйста
+===
+
+title: QuestCompleted
+---
+Witch: Спасибо что помог с ягодами!
+Witch: Ты наверно ищешь деревню аниматоров. Она находся к северу отсюда
 ===

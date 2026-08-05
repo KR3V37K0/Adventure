@@ -1,10 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class PlayerInteractor : MonoBehaviour
 {
+    [Inject]PlayerInput input;
     IInteractable objInteract;
     [SerializeField] bool canInteract;
+    void Start()
+    {
+        input.actions["Interact"].canceled += ctx => OnInteract(ctx);
+    }
     void OnTriggerEnter2D(Collider2D coll)
     {
         canInteract=coll.gameObject.TryGetComponent(out objInteract);
@@ -20,7 +26,7 @@ public class PlayerInteractor : MonoBehaviour
     }
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if(objInteract!=null)
+        if (objInteract != null)
         {
             objInteract.Interact();
         }
