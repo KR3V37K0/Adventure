@@ -3,11 +3,13 @@ using UnityEditor;
 using Unity;
 using UnityEngine;
 using Zenject;
+using System.ComponentModel;
 
 public class QuestIU : MonoBehaviour
 {
     [SerializeField]GameObject questPanel;
     [SerializeField]GameObject content;
+    [Inject] DiContainer container;
     [Inject]QuestSystem questSystem;
 
     
@@ -16,7 +18,7 @@ public class QuestIU : MonoBehaviour
         QuestUIPanel panel;
         foreach(QuestInstance quest in questSystem.activeQuests)
         {
-            panel = Instantiate(questPanel,content.transform).GetComponent<QuestUIPanel>();
+            panel = container.InstantiatePrefab(questPanel, content.transform).GetComponent<QuestUIPanel>();
             panel.Init(quest);
         }
 

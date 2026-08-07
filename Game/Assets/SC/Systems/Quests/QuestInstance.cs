@@ -57,6 +57,13 @@ public class QuestInstance
     }
     public QuestStep GetCurrentStep()
     {
+        if(Quest.steps.Count<=CurrentStepIndex)return null;
         return Quest.steps[CurrentStepIndex];
+    }
+    public int GetCurrentProgress(QuestContext context)
+    {
+        var step = GetCurrentStep();
+        if (step == null) return 0;
+        return step.GetProgress(context);
     }
 }

@@ -1,8 +1,10 @@
 using UnityEngine;
 using Zenject;
+using System.Collections.Generic;
 
 public class QuestInstaller : MonoInstaller
 {
+
     public override void InstallBindings()
     {
         //SignalBusInstaller.Install(Container);
@@ -15,8 +17,10 @@ public class QuestInstaller : MonoInstaller
         Container.DeclareSignal<ItemCollectedSignal>();
         Container.DeclareSignal<TalkedToNPCSignal>();
         Container.DeclareSignal<MiniGameCompletedSignal>();
+        Container.DeclareSignal<QuestUpdatedSignal>();
     }
 }
+public class QuestUpdatedSignal { }
 public class QuestStartedSignal
 {
     public Quest Quest { get; }

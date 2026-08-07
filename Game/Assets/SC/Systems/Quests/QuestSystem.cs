@@ -6,24 +6,25 @@ using Yarn.Unity;
 public class QuestSystem : MonoBehaviour, IInitializable
 {
     [Inject] private SignalBus signalBus;
-    [Inject(Optional = true)] private Inventory playerInventory;
+    
     [Inject] DialogueRunner dialogueRunner;
 
     public List<QuestInstance> activeQuests { get; private set; } = new List<QuestInstance>();
     private HashSet<string> completedQuests = new HashSet<string>();
     private Dictionary<string, Quest> questsById = new Dictionary<string, Quest>();
-    private QuestContext context;
+    public QuestContext context { get; private set; }
+    [Inject]Inventory playerInventory;
 
    private void Awake()
     {
         signalBus.Subscribe<ItemCollectedSignal>(OnItemCollected);
 
-        context = new QuestContext
-        {
-            inventory = playerInventory,
-            killCounts = new Dictionary<string, int>(),
-            talkedNPCs = new List<string>()
-        };
+            context = new QuestContext
+            {
+                inventory = playerInventory,
+                killCounts = new Dictionary<string, int>(),
+                talkedNPCs = new List<string>()
+            };
 
         Quest[] loadedQuests = Resources.LoadAll<Quest>("Quests");
         foreach (var quest in loadedQuests)
@@ -111,6 +112,7 @@ public class QuestSystem : MonoBehaviour, IInitializable
                 CompleteQuest(instance);
             }
         }
+        signalBus.Fire(new QuestUpdatedSignal());
     }
 
     private void CompleteQuest(QuestInstance instance)

@@ -9,4 +9,8 @@ public class TalkStep : QuestStep
     {
         return context.talkedNPCs.Contains(npcID);
     }
+    public override int GetProgress(QuestContext context)
+    {
+        return IsComplete(context) ? requiredCount : 0;
+    }
 }
