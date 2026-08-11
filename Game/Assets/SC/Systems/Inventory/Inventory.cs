@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, ISaveable
 {
     [Inject] SignalBus signalBus;
     private Dictionary<string, int> items = new Dictionary<string, int>();
@@ -25,5 +25,14 @@ public class Inventory : MonoBehaviour
     public bool HasItem(string itemID, int count = 1)
     {
         return GetItemCount(itemID) >= count;
+    }
+     public object SaveState()
+    {
+        return items;
+    }
+
+    public void LoadState(object state)
+    {
+        items = (Dictionary<string, int>)state;
     }
 }

@@ -2,12 +2,35 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class PlayerSpawnSC : MonoBehaviour
+public class PlayerSpawnSC : MonoBehaviour,ISaveable
 {
     [Inject] private SignalBus signalBus;
-    [Inject] private DiContainer container; // <-- добавляем
+    [Inject] private DiContainer container; 
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private string previousScene = "";
+    Vector3 SpawnPosition { get; set; }
+    GameObject player;
+
+
+    public object SaveState()
+    {
+        return new PlayerSaveData
+        {
+            spawnPosition = player.transform.position,
+        };
+    }
+
+    public void LoadState(object state)
+    {
+        var data = (PlayerSaveData)state;
+        SpawnPosition = data.spawnPosition;
+    }
+
+    [System.Serializable]
+    public class PlayerSaveData
+    {
+        public Vector3 spawnPosition;
+    }
 
     private SpawnPointSC[] spawnPoints;
 
@@ -27,13 +50,20 @@ public class PlayerSpawnSC : MonoBehaviour
         spawnPoints = FindObjectsByType<SpawnPointSC>();
         if (spawnPoints.Length < 1) return;
 
-        SpawnPointSC target;
-        if (string.IsNullOrEmpty(previousScene))
-            target = spawnPoints.FirstOrDefault(obj => obj.Id == "Default");
+        Vector3 target;
+        if (SpawnPosition != null)
+        {
+            target = SpawnPosition;
+        }
         else
         {
-            target = spawnPoints.FirstOrDefault(obj => obj.Id == previousScene);
-            if (target == null) target = spawnPoints.FirstOrDefault(obj => obj.Id == "Default");
+            if (string.IsNullOrEmpty(previousScene))
+                target = spawnPoints.FirstOrDefault(obj => obj.Id == "Default").transform.position;
+            else
+            {
+                target = spawnPoints.FirstOrDefault(obj => obj.Id == previousScene).transform.position;
+                if (target == null) target = spawnPoints.FirstOrDefault(obj => obj.Id == "Default").transform.position;
+            }
         }
 
         if (target == null)
@@ -42,16 +72,18 @@ public class PlayerSpawnSC : MonoBehaviour
             return;
         }
 
-        // Создаём игрока через контейнер, чтобы инжекты отработали
-        GameObject player = container.InstantiatePrefab(
-            playerPrefab,
-            target.transform.position,
-            Quaternion.identity,
-            null
-        );
+        SpawnPlayer(target);
 
         previousScene = signal.SceneName;
         signalBus.Fire(new PlayerSpawnedSignal(player));
+    }
+    void SpawnPlayer(Vector3 position)
+    {   player = container.InstantiatePrefab(
+            playerPrefab,
+            position,
+            Quaternion.identity,
+            null
+        );
     }
 }
 

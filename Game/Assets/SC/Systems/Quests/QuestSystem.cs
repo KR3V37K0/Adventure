@@ -2,8 +2,9 @@ using UnityEngine;
 using Zenject;
 using System.Collections.Generic;
 using Yarn.Unity;
+using System.Linq;
 
-public class QuestSystem : MonoBehaviour, IInitializable
+public class QuestSystem : MonoBehaviour, IInitializable,ISaveable
 {
     [Inject] private SignalBus signalBus;
     
@@ -47,6 +48,8 @@ public class QuestSystem : MonoBehaviour, IInitializable
 
         dialogueRunner.AddFunction<string, bool>("is_quest_active", questID => IsQuestActive(questID));
         dialogueRunner.AddFunction<string, bool>("is_quest_completed", questID =>  IsQuestCompleted(questID));
+        dialogueRunner.AddCommandHandler<string>("talking",id=>TalkingNPC(id) );
+        dialogueRunner.AddFunction<string, bool>("is_step_completed", stepID => IsStepCompleted(stepID));
 
     }
 
@@ -61,6 +64,27 @@ public class QuestSystem : MonoBehaviour, IInitializable
     {
         return completedQuests.Contains(questID);
     }
+    public bool IsStepCompleted(string stepID)
+    {
+        foreach (var quest in questsById.Values)
+        {
+            int stepIndex = quest.steps.FindIndex(s => s.name == stepID);
+            if (stepIndex == -1) continue;
+            if (IsQuestCompleted(quest.questID))
+                return true;
+
+            var activeInstance = activeQuests.Find(q => q.Quest.questID == quest.questID);
+            if (activeInstance != null)
+            {
+                return stepIndex < activeInstance.CurrentStepIndex;
+            }
+
+            return false;
+        }
+
+        Debug.LogWarning($"Step '{stepID}' not found in any quest.");
+        return false;
+    }
     public bool IsQuestActive(string questID)
     {
         return activeQuests.Exists(q => q.Quest.questID == questID);
@@ -69,7 +93,7 @@ public class QuestSystem : MonoBehaviour, IInitializable
     {
         if (!questsById.TryGetValue(questID, out Quest quest))
         {
-            Debug.LogError($"Квест с ID '{questID}' не найден!");
+            Debug.LogError($"Quest ID '{questID}' not found");
             return;
         }
         StartQuest(quest);
@@ -134,7 +158,10 @@ public class QuestSystem : MonoBehaviour, IInitializable
     {
         UpdateAllQuests();
     }
-
+    void TalkingNPC(string id)
+    {
+        signalBus.Fire(new TalkedToNPCSignal(id));
+    }
     private void OnTalkedToNPC(TalkedToNPCSignal signal)
     {
         if (!context.talkedNPCs.Contains(signal.npcId))
@@ -146,5 +173,58 @@ public class QuestSystem : MonoBehaviour, IInitializable
     {
         context.miniGameCompleted = true;
         UpdateAllQuests();
+    }
+    
+    public object SaveState()
+    {
+        var data = new QuestSaveData
+        {
+            completedQuests = new List<string>(completedQuests),
+            activeQuests = activeQuests.Select(q => new QuestInstanceData
+            {
+                questID = q.Quest.questID,
+                currentStepIndex = q.CurrentStepIndex,
+                isCompleted = q.IsCompleted,
+                stepProgress = q.stepProgress 
+            }).ToList()
+        };
+        return data;
+    }
+
+    public void LoadState(object state)
+    {
+        var data = (QuestSaveData)state;
+
+        completedQuests.Clear();
+        activeQuests.Clear();
+
+        foreach (var id in data.completedQuests)
+            completedQuests.Add(id);
+
+        foreach (var qData in data.activeQuests)
+        {
+            if (questsById.TryGetValue(qData.questID, out Quest quest))
+            {
+                var instance = new QuestInstance(quest,qData.currentStepIndex,qData.isCompleted);
+                activeQuests.Add(instance);
+            }
+        }
+        signalBus.Fire(new QuestUpdatedSignal());
+    }
+
+    [System.Serializable]
+    public class QuestSaveData
+    {
+        public List<string> completedQuests;
+        public List<QuestInstanceData> activeQuests;
+    }
+
+    [System.Serializable]
+    public class QuestInstanceData
+    {
+        public string questID;
+        public int currentStepIndex;
+        public bool isCompleted;
+        public Dictionary<string, int> stepProgress;
     }
 }

@@ -4,10 +4,10 @@
     <<jump Welcome>>
 <<endonce>>
 Witch: вот так вот
-<<if is_quest_active("qTakeBerry")>>
-    <<jump QuestInProgress>>
-<<elseif is_quest_completed("qTakeBerry")>>
+<<if is_step_completed("qTakeBerry_01")>>
     <<jump QuestCompleted>>
+<<elseif is_quest_active("qTakeBerry")>>
+    <<jump QuestInProgress>>
 <<else>>
     <<jump NoQuest>>
 <<endif>>
@@ -26,7 +26,7 @@ Witch: Я лесная ведьма Фиалка. А кто ты?
     <<stop>>
 Witch: Здорово
 
-<<jump NoQuest>>>>
+<<jump Witch>>
 ===
 
 title: NoQuest
@@ -48,4 +48,5 @@ title: QuestCompleted
 ---
 Witch: Спасибо что помог с ягодами!
 Witch: Ты наверно ищешь деревню аниматоров. Она находся к северу отсюда
+<<talking witch>>
 ===

@@ -7,13 +7,26 @@ public class QuestInstance
     public int CurrentStepIndex { get; private set; }
     public bool IsCompleted { get; private set; }
 
-    private Dictionary<string, int> stepProgress = new Dictionary<string, int>();
+    public Dictionary<string, int> stepProgress { get; private set; } = new Dictionary<string, int>();
 
     public QuestInstance(Quest quest)
     {
         Quest = quest;
         CurrentStepIndex = 0;
         IsCompleted = false;
+    }
+    public QuestInstance(Quest quest, int currentStepIndex,bool isCompleted)
+    {
+        Quest = quest;
+        CurrentStepIndex = currentStepIndex;
+        IsCompleted = isCompleted;
+    }
+    public QuestInstance(Quest quest, int currentStepIndex,bool isCompleted, Dictionary<string, int> progress)
+    {
+        Quest = quest;
+        CurrentStepIndex = currentStepIndex;
+        IsCompleted = isCompleted;
+        stepProgress=progress;
     }
 
     public bool IsCurrentStepComplete(QuestContext context)
