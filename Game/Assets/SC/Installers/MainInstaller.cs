@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Yarn.Unity;
 using Zenject;
@@ -10,6 +11,7 @@ public class Installer : MonoInstaller
 	//[SerializeField] GameObject CameraManager;
 	[SerializeField] GameObject DialogueSystem;
 	[SerializeField] GameObject PhoneUI;
+	[SerializeField] GameObject itemPool;
 	public override void InstallBindings()
 	{
 		SignalBusInstaller.Install(Container);
@@ -42,7 +44,14 @@ public class Installer : MonoInstaller
 			.FromComponentInNewPrefab(PhoneUI)
 			.AsSingle()
 			.NonLazy();
-	
+		Container.Bind<ItemsDatabase>()
+			.FromNewComponentOnNewGameObject()
+			.AsSingle()
+			.NonLazy();
+		Container.Bind<ItemPool>()
+			.FromComponentInNewPrefab(itemPool)
+			.AsSingle()
+			.NonLazy();
 
 		Container.DeclareSignal<SceneLoadedSignal>();
 		Container.DeclareSignal<PlayerSpawnedSignal>();

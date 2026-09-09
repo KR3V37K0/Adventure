@@ -5,7 +5,8 @@ using Zenject;
 public class Inventory : MonoBehaviour, ISaveable
 {
     [Inject] SignalBus signalBus;
-    private Dictionary<string, int> items = new Dictionary<string, int>();
+    public Dictionary<string, int> items{get;private set;} = new Dictionary<string, int>();
+
 
     public void AddItem(string itemID, int count = 1)
     {

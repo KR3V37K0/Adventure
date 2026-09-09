@@ -9,7 +9,6 @@ public class MainMenuSC:MonoBehaviour
 
     public void btn_Start()
     {
-        //SceneManager.LoadScene("VILLAGE");
         SceneLoader.LoadScene("VILLAGE");
         SaveSystem.LoadGame();
     }

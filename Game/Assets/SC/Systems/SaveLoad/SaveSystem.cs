@@ -40,7 +40,7 @@ public class SaveSystem : MonoBehaviour, IInitializable
         {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             Formatting = Formatting.Indented,
-            TypeNameHandling = TypeNameHandling.Auto // чтобы сохранить типы для словаря
+            TypeNameHandling = TypeNameHandling.Auto
         };
         string json = JsonConvert.SerializeObject(saveData, settings);
         File.WriteAllText(savePath, json);
@@ -51,7 +51,7 @@ public class SaveSystem : MonoBehaviour, IInitializable
     {
         if (!File.Exists(savePath))
         {
-            Debug.Log("Файл сохранения не найден");
+            Debug.Log("Save File not found");
             return;
         }
 
