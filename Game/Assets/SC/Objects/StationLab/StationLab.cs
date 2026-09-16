@@ -1,53 +1,15 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Zenject;
+
 
 public class StationLab : MonoBehaviour, IInteractable
 {
-    [SerializeField] private GameObject window;
-    [Inject] private PlayerInput input;
-
-    [Header("LAB SETTINGS")]
-    public float currentTemperature {get; private set;}
-    [SerializeField] private LiquidType currentLiquid;
-    public LiquidType CurrentLiquid => currentLiquid;
-
-    public System.Action<int> OnTemperatureChanged;
-
-    void OnEnable()
+    [Inject]SceneLoaderSC loader;
+    public async void Interact()
     {
-        OnTemperatureChanged+=SetTemperature;
-    }
-    void OnDisable()
-    {
-        OnTemperatureChanged-=SetTemperature;
-    }
-    private void Awake()
-    {
-        window.SetActive(false);
-    }
+        //await SceneManager.LoadSceneAsync("LAB_STATION");
+        loader.LoadSceneFast("LAB_STATION");
 
-    
-
-    /// OUTER
-
-    public void Interact()
-    {
-        window.SetActive(true);
-    }
-
-    
-
-
-    // INNER
-    
-    public void SetLiquid(LiquidType newLiquid)
-    {
-        currentLiquid = newLiquid;
-    }
-
-    public void SetTemperature(int temp)
-    {
-        currentTemperature = temp;
     }
 }

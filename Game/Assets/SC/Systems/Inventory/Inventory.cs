@@ -15,7 +15,25 @@ public class Inventory : MonoBehaviour, ISaveable
         else
             items[itemID] = count;
 
-        signalBus.Fire(new ItemCollectedSignal(itemID));
+        signalBus.Fire(new ItemCollectedSignal(itemID,count));
+    }
+    public bool RemoveItem(string itemID, int count = 1)
+    {
+        if (!items.TryGetValue(itemID, out int current) || current < count)
+        {
+            Debug.LogWarning($"Недостаточно {itemID} для удаления ({count} из {current})");
+            return false;
+        }
+
+        current -= count;
+
+        if (current <= 0)
+            items.Remove(itemID);
+        else
+            items[itemID] = current;
+
+        signalBus.Fire(new ItemRemovedSignal(itemID, count));
+        return true;
     }
 
     public int GetItemCount(string itemID)
@@ -27,7 +45,7 @@ public class Inventory : MonoBehaviour, ISaveable
     {
         return GetItemCount(itemID) >= count;
     }
-     public object SaveState()
+    public object SaveState()
     {
         return items;
     }
@@ -36,4 +54,5 @@ public class Inventory : MonoBehaviour, ISaveable
     {
         items = (Dictionary<string, int>)state;
     }
+    
 }

@@ -34,6 +34,20 @@ public class SceneLoaderSC : MonoBehaviour
         await img_Fade.DOFade(0f, 1f).ToUniTask();
         Canvas.SetActive(false);
     }
+    public async void LoadSceneFast(string _scene)
+    {
+        Canvas.SetActive(true);
+
+        await img_Fade.DOFade(1f, 0.2f).ToUniTask();
+
+        var asyncLoad = SceneManager.LoadSceneAsync(_scene);
+        while (!asyncLoad.isDone) await UniTask.Yield();
+
+        signalBus.Fire(new SceneLoadedSignal(_scene));
+
+        await img_Fade.DOFade(0f, 0.2f).ToUniTask();
+        Canvas.SetActive(false);
+    }
 
     private async UniTask LoadSceneAsyncUniTask(string _scene)
     {

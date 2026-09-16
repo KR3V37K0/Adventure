@@ -15,6 +15,7 @@ public class QuestInstaller : MonoInstaller
         Container.DeclareSignal<QuestCompletedSignal>();
         Container.DeclareSignal<EnemyKilledSignal>();
         Container.DeclareSignal<ItemCollectedSignal>();
+        Container.DeclareSignal<ItemRemovedSignal>();
         Container.DeclareSignal<TalkedToNPCSignal>();
         Container.DeclareSignal<MiniGameCompletedSignal>();
         Container.DeclareSignal<QuestUpdatedSignal>();
@@ -41,8 +42,16 @@ public class EnemyKilledSignal
 
 public class ItemCollectedSignal
 {
-    public string ItemId { get; }
-    public ItemCollectedSignal(string id) => ItemId = id;
+    public string ItemID { get; }
+    public int Count { get; }
+    public ItemCollectedSignal(string id, int count) { ItemID = id; Count = count; }
+}
+
+public class ItemRemovedSignal
+{
+    public string ItemID { get; }
+    public int Count { get; }
+    public ItemRemovedSignal(string id, int count) { ItemID = id; Count = count; }
 }
 
 public class TalkedToNPCSignal

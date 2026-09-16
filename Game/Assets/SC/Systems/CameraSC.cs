@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
@@ -5,7 +6,7 @@ using Zenject;
 public class CameraSC : MonoBehaviour
 {
     [Inject] SignalBus signalBus;
-    CinemachineTargetGroup target;
+    CinemachineTargetGroup[] targets;
 
     void OnEnable()
     {
@@ -18,8 +19,8 @@ public class CameraSC : MonoBehaviour
     }
     void OnSceneLoaded(PlayerSpawnedSignal signal)
     {
-        target=FindObjectsByType<CinemachineTargetGroup>()[0];
-        if(target==null){Debug.Log("no target camera"); return;}
-        target.AddMember(signal.player.transform,1f,1f);
+        targets=FindObjectsByType<CinemachineTargetGroup>();
+        if(targets.Length==0){Debug.Log("no target camera"); return;}
+        targets[0].AddMember(signal.player.transform,1f,1f);
     }
 }
