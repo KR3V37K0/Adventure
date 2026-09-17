@@ -6,6 +6,7 @@ using Zenject;
 public class CameraSC : MonoBehaviour
 {
     [Inject] SignalBus signalBus;
+    [Inject]PlayerControllerSC player;
     CinemachineTargetGroup[] targets;
 
     void OnEnable()
@@ -21,6 +22,6 @@ public class CameraSC : MonoBehaviour
     {
         targets=FindObjectsByType<CinemachineTargetGroup>();
         if(targets.Length==0){Debug.Log("no target camera"); return;}
-        targets[0].AddMember(signal.player.transform,1f,1f);
+        targets[0].AddMember(player.transform,1f,1f);
     }
 }

@@ -228,7 +228,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1771199399357184160}
   - component: {fileID: 8732452703595804176}
-  - component: {fileID: -4299269565797477709}
   - component: {fileID: 2587623041707388329}
   - component: {fileID: 2838310462615880391}
   - component: {fileID: 5336770442824707001}
@@ -238,7 +237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1771199399357184160
 Transform:
   m_ObjectHideFlags: 0
@@ -281,18 +280,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &-4299269565797477709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4111292892199337287}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d3f0d3899f9dea40a40f86745ec8b2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDestroyer
 --- !u!114 &2587623041707388329
 MonoBehaviour:
   m_ObjectHideFlags: 0

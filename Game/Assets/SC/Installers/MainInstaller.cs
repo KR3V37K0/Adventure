@@ -8,7 +8,6 @@ public class Installer : MonoInstaller
 	[SerializeField] GameObject SceneLoader;
 	[SerializeField] GameObject PlayerSpawner;
 	[SerializeField] GameObject playerPrefab;
-	//[SerializeField] GameObject CameraManager;
 	[SerializeField] GameObject DialogueSystem;
 	[SerializeField] GameObject PhoneUI;
 	[SerializeField] GameObject itemPool;
@@ -24,6 +23,10 @@ public class Installer : MonoInstaller
 			.FromComponentInNewPrefab(PlayerSpawner)
 			.AsSingle()
 			.NonLazy(); 
+		
+		Container.Bind<PlayerControllerSC>()
+			.FromComponentInNewPrefab(playerPrefab)
+			.AsSingle();
 
 		Container.Bind<CameraSC>()
 			.FromNewComponentOnNewGameObject()
@@ -67,11 +70,15 @@ public class SceneLoadedSignal
         SceneName = sceneName;
     }
 }
-public class PlayerSpawnedSignal
+/*public class PlayerSpawnedSignal
 {
     public GameObject player { get; }
     public PlayerSpawnedSignal(GameObject _player)
     {
         player = _player;
     }
+}*/
+public class PlayerSpawnedSignal
+{
+
 }
