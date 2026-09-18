@@ -1,3 +1,5 @@
+
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -12,6 +14,19 @@ public class ResourceCountVisulizer : MonoBehaviour
     void OnEnable()
     {
         signalBus.Subscribe<ItemCollectedSignal>(visualize);
+        signalBus.Subscribe<SaveLoadedSignal>(OnLoaded);
+        
+    }
+    void OnDisable()
+    {
+        signalBus.Unsubscribe<ItemCollectedSignal>(visualize);
+        signalBus.Unsubscribe<SaveLoadedSignal>(OnLoaded);
+    }
+
+    public async void OnLoaded(SaveLoadedSignal signal)
+    {
+        await Task.Delay(1000);
+        visualize(new ItemCollectedSignal(resource.name,0));
     }
     public void visualize(ItemCollectedSignal signal)
     {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System;
 
-public class SaveSystem : MonoBehaviour, IInitializable
+public class SaveSystem : MonoBehaviour
 {
     [Inject] private SignalBus signalBus;
     [Inject] private List<ISaveable> saveables; 
@@ -19,10 +19,6 @@ public class SaveSystem : MonoBehaviour, IInitializable
     {
         savePath = Path.Combine(Application.persistentDataPath, "save.json");
         DontDestroyOnLoad(gameObject);
-    }
-
-    public void Initialize()
-    {
         signalBus.Subscribe<SceneLoadedSignal>(OnSceneLoaded);
     }
 
@@ -77,7 +73,8 @@ public class SaveSystem : MonoBehaviour, IInitializable
 
     private void OnSceneLoaded(SceneLoadedSignal signal)
     {
-        SaveGame();
+        if(signal.SceneName!="MAIN_MENU")
+            SaveGame();
     }
 
     private void OnDestroy()

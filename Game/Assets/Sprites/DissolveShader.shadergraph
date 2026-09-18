@@ -1517,9 +1517,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -621.3120727539063,
-            "y": 308.73602294921877,
-            "width": 181.24801635742188,
+            "x": -621.31201171875,
+            "y": 486.14398193359377,
+            "width": 181.248046875,
             "height": 244.99200439453126
         }
     },
@@ -1553,7 +1553,7 @@
         "tex2d"
     ],
     "m_Precision": 0,
-    "m_PreviewExpanded": false,
+    "m_PreviewExpanded": true,
     "m_DismissedVersion": 0,
     "m_PreviewMode": 0,
     "m_CustomColors": {

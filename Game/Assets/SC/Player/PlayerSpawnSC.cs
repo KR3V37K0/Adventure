@@ -30,12 +30,12 @@ public class PlayerSpawnSC : MonoBehaviour, ISaveable
 
         if (spawnPoints.Length < 1)
         {
+            previousScene = signal.SceneName;
             HidePlayer();
             return;
         }
 
         Vector3 target;
-
         if (hasSavedPosition)
         {
             target = savedPosition;
@@ -54,6 +54,7 @@ public class PlayerSpawnSC : MonoBehaviour, ISaveable
             if (spawnPoint == null)
             {
                 Debug.LogError("Нет точки спавна с Id 'Default'!");
+                previousScene = signal.SceneName;
                 HidePlayer();
                 return;
             }
