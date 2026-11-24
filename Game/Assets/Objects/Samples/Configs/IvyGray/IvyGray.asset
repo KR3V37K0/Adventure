@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c47d2feb772f7f428d211a68020b2c2, type: 3}
+  m_Name: IvyGray
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectInFlaskConfig
+  layers:
+  - {fileID: 11400000, guid: b503331721f0a6f408310f128e4223cc, type: 2}
+  - {fileID: 11400000, guid: 6cf9c426353b60943871e4eaf6fab041, type: 2}
+  essenceCount: 2

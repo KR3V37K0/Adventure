@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c763f87ddebb1c4cbeb9d7ecc301e5d, type: 3}
+  m_Name: IvyGray 0
+  m_EditorClassIdentifier: Assembly-CSharp::LayerConfig
+  sprite: {fileID: 21300000, guid: e606eb732e5acdc4c8473a55960f3535, type: 3}
+  alpha: {fileID: 21300000, guid: 235f2342d8d270148b057bf22840201d, type: 3}
+  depth: 0
+  temperaturePrefer: {x: 0, y: 800}
+  solubilityData:
+  - liquid: {fileID: 11400000, guid: f101f20ddcd850041a9621794ccefc1a, type: 2}
+    solubilityPercent: 50
